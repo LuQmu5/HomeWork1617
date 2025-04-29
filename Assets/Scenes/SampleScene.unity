@@ -534,9 +534,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960f1a7226d4586409b66d48b011a0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleBehavior: 1
-  _reactionBehavior: 1
-  _enemyPrefab: {fileID: 5866725824259941789, guid: d4359034bd36a6a41abe78a8fbbfb386, type: 3}
+  _idleBehaviour: 1
+  _reactToPlayerBehaviour: 1
 --- !u!4 &538170081
 Transform:
   m_ObjectHideFlags: 0
@@ -546,7 +545,7 @@ Transform:
   m_GameObject: {fileID: 538170079}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 1, z: 5}
+  m_LocalPosition: {x: 20, y: 1, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -584,7 +583,6 @@ Transform:
   - {fileID: 1736417501}
   - {fileID: 538170081}
   - {fileID: 1535533897}
-  - {fileID: 2065909343}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &575488824
@@ -823,7 +821,7 @@ GameObject:
   - component: {fileID: 1295361553}
   - component: {fileID: 1295361552}
   - component: {fileID: 1295361551}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DirectionCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -948,9 +946,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960f1a7226d4586409b66d48b011a0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleBehavior: 2
-  _reactionBehavior: 2
-  _enemyPrefab: {fileID: 5866725824259941789, guid: d4359034bd36a6a41abe78a8fbbfb386, type: 3}
+  _idleBehaviour: 2
+  _reactToPlayerBehaviour: 2
 --- !u!4 &1535533897
 Transform:
   m_ObjectHideFlags: 0
@@ -960,7 +957,7 @@ Transform:
   m_GameObject: {fileID: 1535533895}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 1, z: -5}
+  m_LocalPosition: {x: 0, y: 1, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1010,17 +1007,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda58a9600a3d67409bcccaf877d1cb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTransform: {fileID: 1968593109}
   _spawnPoints:
   - {fileID: 1736417502}
   - {fileID: 538170080}
   - {fileID: 1535533896}
-  - {fileID: 2065909342}
-  _patrolPoints:
-  - {fileID: 1736417501}
-  - {fileID: 538170081}
-  - {fileID: 1535533897}
-  - {fileID: 2065909343}
+  _enemyPrefab: {fileID: 5866725824259941789, guid: d4359034bd36a6a41abe78a8fbbfb386, type: 3}
 --- !u!1 &1736417500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1038,7 @@ Transform:
   m_GameObject: {fileID: 1736417500}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5, y: 1, z: 5}
+  m_LocalPosition: {x: -20, y: 1, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1065,9 +1056,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960f1a7226d4586409b66d48b011a0ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _idleBehavior: 0
-  _reactionBehavior: 0
-  _enemyPrefab: {fileID: 5866725824259941789, guid: d4359034bd36a6a41abe78a8fbbfb386, type: 3}
+  _idleBehaviour: 0
+  _reactToPlayerBehaviour: 0
 --- !u!1 &1968593105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,8 +1071,8 @@ GameObject:
   - component: {fileID: 1968593107}
   - component: {fileID: 1968593110}
   - component: {fileID: 1968593111}
-  m_Layer: 0
-  m_Name: Character
+  m_Layer: 6
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1194,9 +1184,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71f062ac58f94c649ada2eec8cca8d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraTransform: {fileID: 310768255}
   _moveSpeed: 5
   _rotationSpeed: 200
-  _cameraTransform: {fileID: 310768255}
 --- !u!1 &1977245654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,53 +1219,6 @@ Transform:
   - {fileID: 410087041}
   - {fileID: 832575519}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2065909341
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2065909343}
-  - component: {fileID: 2065909342}
-  m_Layer: 0
-  m_Name: EnemySpawnPoint (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2065909342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065909341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 960f1a7226d4586409b66d48b011a0ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _idleBehavior: 2
-  _reactionBehavior: 1
-  _enemyPrefab: {fileID: 5866725824259941789, guid: d4359034bd36a6a41abe78a8fbbfb386, type: 3}
---- !u!4 &2065909343
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065909341}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5, y: 1, z: -5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 571237853}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2078799665
 GameObject:

@@ -1,14 +1,14 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovementController : MonoBehaviour
+public class PlayerBehaviour : MonoBehaviour
 {
     private const string VerticalAxis = "Vertical";
     private const string HorizontalAxis = "Horizontal";
 
+    [SerializeField] private Transform _cameraTransform;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _rotationSpeed = 10f;
-    [SerializeField] private Transform _cameraTransform;
 
     private CharacterController _controller;
     private Vector3 _moveDirection;

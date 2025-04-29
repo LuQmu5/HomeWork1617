@@ -121,3 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799b1123cbed528458fa14349d74627f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _reactToPlayerRange: 10
