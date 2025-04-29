@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-public class EnemyBehaviour : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour, ICoroutineRunner
 {
     [SerializeField] private LayerMask _playerMask;
     [SerializeField] private float _reactToPlayerRange = 10;
@@ -24,16 +25,23 @@ public class EnemyBehaviour : MonoBehaviour
         _idleBehaviour.Enter();
     }
 
-    private void FixedUpdate()
+    private void OnTriggerEnter(Collider other)
     {
-        if (IsPlayerInReactRange())
+        if (other.TryGetComponent(out PlayerBehaviour player))
         {
-            _reactToPlayerBehaviour.React();
+            _reactToPlayerBehaviour.React(player);
         }
     }
 
-    private bool IsPlayerInReactRange()
+    public void Die()
     {
-        return Physics.OverlapSphere(transform.position, _reactToPlayerRange, _playerMask).Length != 0;
+        Destroy(gameObject);
     }
+}
+
+
+public interface ICoroutineRunner
+{
+    public Coroutine StartCoroutine(IEnumerator coroutine);
+    public void StopCoroutine(Coroutine coroutine);
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8806058797160915559}
   - component: {fileID: 4775507688994908197}
   - component: {fileID: 5866725824259941789}
+  - component: {fileID: 4227942824973866436}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -125,3 +126,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _reactToPlayerRange: 10
+--- !u!65 &4227942824973866436
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871503023320497552}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 2, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}

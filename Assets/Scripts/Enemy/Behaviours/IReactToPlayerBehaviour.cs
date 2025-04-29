@@ -1,4 +1,4 @@
 ﻿public interface IReactToPlayerBehaviour
 {
-    public void React();
+    public void React(PlayerBehaviour player);
 }

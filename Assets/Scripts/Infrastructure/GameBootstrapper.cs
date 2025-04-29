@@ -5,10 +5,11 @@ public class GameBootstrapper : MonoBehaviour
 {
     [SerializeField] private EnemySpawnPoint[] _spawnPoints;
     [SerializeField] private EnemyBehaviour _enemyPrefab;
+    [SerializeField] private Transform[] _patrolPoints;
 
     private void Start()
     {
-        EnemyFactory enemyFactory = new EnemyFactory(_enemyPrefab);
+        EnemyFactory enemyFactory = new EnemyFactory(_enemyPrefab, _patrolPoints);
 
         foreach (EnemySpawnPoint spawnPoint in _spawnPoints)
         {

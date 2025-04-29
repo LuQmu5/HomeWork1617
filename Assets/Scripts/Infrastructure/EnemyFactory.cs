@@ -16,72 +16,65 @@ public enum EnemyReactToPlayerBehaviours
 
 public class EnemyFactory
 {
-    private const string EnemyPrefabPath = "Resources/Prefabs";
-
     private EnemyBehaviour _enemyPrefab;
+    private Transform[] _patrolPoints;
 
-    public EnemyFactory()
-    {
-        // _enemyPrefab = Resources.Load<EnemyBehaviour>(EnemyPrefabPath);
-    }
-
-    public EnemyFactory(EnemyBehaviour enemyPrefab)
+    public EnemyFactory(EnemyBehaviour enemyPrefab, Transform[] patrolPoints)
     {
         _enemyPrefab = enemyPrefab;
+        _patrolPoints = patrolPoints;
     }
 
     public EnemyBehaviour Get(EnemyIdleBehaviours idleBehaviour, EnemyReactToPlayerBehaviours reactToPlayerBehaviour)
     {
-        IIdleBehaviour idle = GetIdleBehaviour(idleBehaviour);
-        IReactToPlayerBehaviour reactToPlayer = GetReactToPlayerBehaviour(reactToPlayerBehaviour);
-
         EnemyBehaviour enemy = Object.Instantiate(_enemyPrefab);
 
-        Debug.Log(enemy == null);
+        IIdleBehaviour idle = GetIdleBehaviour(idleBehaviour, enemy);
+        IReactToPlayerBehaviour reactToPlayer = GetReactToPlayerBehaviour(reactToPlayerBehaviour, enemy);
 
         enemy.Init(idle, reactToPlayer);
 
         return enemy;
     }
 
-    private static IReactToPlayerBehaviour GetReactToPlayerBehaviour(EnemyReactToPlayerBehaviours reactToPlayerBehaviour)
+    private IReactToPlayerBehaviour GetReactToPlayerBehaviour(EnemyReactToPlayerBehaviours reactToPlayerBehaviour, EnemyBehaviour enemy)
     {
         IReactToPlayerBehaviour reactToPlayer = null;
 
         switch (reactToPlayerBehaviour)
         {
             case EnemyReactToPlayerBehaviours.Aggro:
-                reactToPlayer = new AggroBehaviour();
+                reactToPlayer = new AggroBehaviour(enemy.transform, enemy);
                 break;
 
             case EnemyReactToPlayerBehaviours.DieInstantly:
-                reactToPlayer = new DieInstantlyBehaviour();
+                reactToPlayer = new DieInstantlyBehaviour(enemy);
                 break;
 
             case EnemyReactToPlayerBehaviours.Flee:
-                reactToPlayer = new FleeBehaviour();
+                reactToPlayer = new FleeBehaviour(enemy.transform, enemy);
                 break;
         }
 
         return reactToPlayer;
     }
 
-    private static IIdleBehaviour GetIdleBehaviour(EnemyIdleBehaviours idleBehaviour)
+    private IIdleBehaviour GetIdleBehaviour(EnemyIdleBehaviours idleBehaviour, EnemyBehaviour enemy)
     {
         IIdleBehaviour idle = null;
 
         switch (idleBehaviour)
         {
             case EnemyIdleBehaviours.StandStill:
-                idle = new StandStillBehaviour();
+                idle = new StandStillBehaviour(enemy.transform, enemy);
                 break;
 
             case EnemyIdleBehaviours.Patrol:
-                idle = new PatrolBehaviour();
+                idle = new PatrolBehaviour(enemy.transform, enemy, _patrolPoints);
                 break;
 
             case EnemyIdleBehaviours.RandomPatrol:
-                idle = new RandomPatrolBehaviour();
+                idle = new RandomPatrolBehaviour(enemy.transform, enemy);
                 break;
         }
 
