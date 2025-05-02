@@ -1,50 +1,44 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
-public class RandomPatrolBehaviour : IIdleBehaviour
+public class RandomPatrolBehaviour : IBehaviour
 {
     private Transform _transform;
-    private ICoroutineRunner _coroutineRunner;
     private float _patrolSpeed = 4f;
-    private Coroutine _coroutine;
+    private float _switchDirectionTime = 2;
+    private float _timer = 2;
+    private Vector3 _currentDirection;
 
-    public RandomPatrolBehaviour(Transform transform, ICoroutineRunner coroutineRunner)
+    public RandomPatrolBehaviour(Transform transform)
     {
         _transform = transform;
-        _coroutineRunner = coroutineRunner;
     }
 
     public void Enter()
     {
-        Debug.Log("рандомно хожу туда-сюда");
-        _coroutine = _coroutineRunner.StartCoroutine(RandomPatrolling());
+        Debug.Log("начинаю и рандомно хожу туда-сюда");
     }
 
     public void Exit()
     {
-        if (_coroutine != null)
-            _coroutineRunner.StopCoroutine(_coroutine);
+        Debug.Log("усталь");
     }
 
-    private IEnumerator RandomPatrolling()
+    public void Update()
     {
-        while (true)
+        if (_timer > 0f)
         {
-            float minTimer = 1f;
-            float maxTimer = 3f;
-            float timer = Random.Range(minTimer, maxTimer);
+            _timer -= Time.deltaTime;
+
+            _transform.position = Vector3.MoveTowards(_transform.position, _currentDirection, Time.deltaTime * _patrolSpeed);
+        }
+        else
+        {
+            _timer = _switchDirectionTime;
 
             Vector3 randomDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-            Vector3 targetPosition = _transform.position + randomDirection * _patrolSpeed;
-
-            while (timer > 0f)
-            {
-                timer -= Time.deltaTime;
-
-                _transform.position = Vector3.MoveTowards(_transform.position, targetPosition, Time.deltaTime * _patrolSpeed);
-
-                yield return null;
-            }
+            _currentDirection = _transform.position + randomDirection * _patrolSpeed;
         }
     }
 }

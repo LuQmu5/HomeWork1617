@@ -6,6 +6,7 @@ public class GameBootstrapper : MonoBehaviour
     [SerializeField] private EnemySpawnPoint[] _spawnPoints;
     [SerializeField] private EnemyBehaviour _enemyPrefab;
     [SerializeField] private Transform[] _patrolPoints;
+    [SerializeField] private Transform _playerTransform;
 
     private void Start()
     {
@@ -13,7 +14,7 @@ public class GameBootstrapper : MonoBehaviour
 
         foreach (EnemySpawnPoint spawnPoint in _spawnPoints)
         {
-            spawnPoint.Init(enemyFactory);
+            spawnPoint.Init(enemyFactory, _playerTransform);
             spawnPoint.Spawn();
         }
     }

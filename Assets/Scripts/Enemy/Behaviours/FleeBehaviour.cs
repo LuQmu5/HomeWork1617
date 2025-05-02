@@ -1,46 +1,48 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class FleeBehaviour : IReactToPlayerBehaviour
+public class FleeBehaviour : IBehaviour
 {
     private Transform _transform;
-    private ICoroutineRunner _coroutineRunner;
+    private Transform _playerTransform;
     private float _fleeSpeed = 10f;
+    private float _changeFleeDirectionTime = 2;
+    private float _timer;
+    private Vector3 _currentFleeDirection;
 
-    public FleeBehaviour(Transform transform, ICoroutineRunner coroutineRunner)
+    public FleeBehaviour(Transform transform, Transform playerTransform)
     {
         _transform = transform;
-        _coroutineRunner = coroutineRunner;
+        _playerTransform = playerTransform;
     }
 
-    public void React(PlayerBehaviour playerBehaviour)
+    public void Enter()
     {
-        Debug.Log("ААААА БИЖИМ");
-        _coroutineRunner.StartCoroutine(Fleeing(playerBehaviour.transform));
+        _timer = 0;
+        Debug.Log("ААА МОЯ ОТСТУПАТЬ");
     }
 
-    private IEnumerator Fleeing(Transform playerTransform)
+    public void Exit()
     {
-        while (true)
+        Debug.Log("Фух, моя спокойна");
+    }
+
+    public void Update()
+    {
+        if (_timer > 0f)
         {
-            float minTimer = 1f;
-            float maxTimer = 3f;
-            float timer = Random.Range(minTimer, maxTimer);
+            _timer -= Time.deltaTime;
 
-            Vector3 directionToPlayer = (_transform.position - playerTransform.position).normalized;
+            Vector3 targetPosition = _transform.position + _currentFleeDirection * _fleeSpeed;
+            _transform.position = Vector3.MoveTowards(_transform.position, targetPosition, Time.deltaTime * _fleeSpeed);
+        }
+        else
+        {
+            _timer = _changeFleeDirectionTime;
+
+            Vector3 directionToPlayer = (_transform.position - _playerTransform.position).normalized;
             Vector3 randomOffset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-            Vector3 fleeDirection = (directionToPlayer + randomOffset).normalized;
-
-            Vector3 targetPosition = _transform.position + fleeDirection * _fleeSpeed;
-
-            while (timer > 0f)
-            {
-                timer -= Time.deltaTime;
-
-                _transform.position = Vector3.MoveTowards(_transform.position, targetPosition, Time.deltaTime * _fleeSpeed);
-
-                yield return null;
-            }
+            _currentFleeDirection = (directionToPlayer + randomOffset).normalized;
         }
     }
 }

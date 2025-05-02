@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-public class EnemyBehaviour : MonoBehaviour, ICoroutineRunner
+public class EnemyBehaviour : MonoBehaviour, IDiableActor
 {
-    [SerializeField] private LayerMask _playerMask;
-    [SerializeField] private float _reactToPlayerRange = 10;
+    private IBehaviour _currentBehaviour;
 
-    private IIdleBehaviour _idleBehaviour;
-    private IReactToPlayerBehaviour _reactToPlayerBehaviour;
+    private IBehaviour _idleBehaviour;
+    private IBehaviour _reactToPlayerBehaviour;
 
-    public void Init(IIdleBehaviour idleBehaviour, IReactToPlayerBehaviour reactToPlayerBehaviour)
+    public void Init(IBehaviour idleBehaviour, IBehaviour reactToPlayerBehaviour)
     {
         if (idleBehaviour == null || reactToPlayerBehaviour == null)
             throw new NullReferenceException("не определен тип поведения для врага");
@@ -22,14 +19,23 @@ public class EnemyBehaviour : MonoBehaviour, ICoroutineRunner
 
     private void Start()
     {
-        _idleBehaviour.Enter();
+        _currentBehaviour = _idleBehaviour;
+        _currentBehaviour.Enter();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out PlayerBehaviour player))
         {
-            _reactToPlayerBehaviour.React(player);
+            SwitchBehaviour(_reactToPlayerBehaviour);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out PlayerBehaviour player))
+        {
+            SwitchBehaviour(_idleBehaviour);
         }
     }
 
@@ -37,11 +43,11 @@ public class EnemyBehaviour : MonoBehaviour, ICoroutineRunner
     {
         Destroy(gameObject);
     }
-}
 
-
-public interface ICoroutineRunner
-{
-    public Coroutine StartCoroutine(IEnumerator coroutine);
-    public void StopCoroutine(Coroutine coroutine);
+    private void SwitchBehaviour(IBehaviour newBehaviour)
+    {
+        _currentBehaviour?.Exit();
+        _currentBehaviour = newBehaviour;
+        _currentBehaviour.Enter();
+    }
 }

@@ -1,31 +1,31 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class AggroBehaviour : IReactToPlayerBehaviour
+public class AggroBehaviour : IBehaviour
 {
     private Transform _transform;
-    private ICoroutineRunner _coroutineRunner;
+    private Transform _playerTransform;
     private float _followSpeed = 5;
 
-    public AggroBehaviour(Transform transform, ICoroutineRunner coroutineRunner)
+    public AggroBehaviour(Transform transform, Transform playerTransform)
     {
         _transform = transform;
-        _coroutineRunner = coroutineRunner;
+        _playerTransform = playerTransform;
+
     }
 
-    public void React(PlayerBehaviour player)
+    public void Enter()
     {
-        Debug.Log("У моя бить");
-        _coroutineRunner.StartCoroutine(Following(player.transform));   
+        Debug.Log("Моя заагрица на кого-то");
     }
 
-    private IEnumerator Following(Transform playerTransform)
+    public void Exit()
     {
-        while (true)
-        {
-            _transform.position = Vector3.MoveTowards(_transform.position, playerTransform.position, _followSpeed * Time.deltaTime);
+        Debug.Log("Моя узбагоица");
+    }
 
-            yield return null;
-        }
+    public void Update()
+    {
+        _transform.position = Vector3.MoveTowards(_transform.position, _playerTransform.position, _followSpeed * Time.deltaTime);
     }
 }

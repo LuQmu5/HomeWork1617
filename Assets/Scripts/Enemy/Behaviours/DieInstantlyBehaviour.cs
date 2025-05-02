@@ -1,17 +1,27 @@
 ﻿using UnityEngine;
 
-public class DieInstantlyBehaviour : IReactToPlayerBehaviour
+public class DieInstantlyBehaviour : IBehaviour
 {
-    private EnemyBehaviour _behaviour;
+    private IDiableActor _diableActor;
 
-    public DieInstantlyBehaviour(EnemyBehaviour behaviour)
+    public DieInstantlyBehaviour(IDiableActor diableActor)
     {
-        _behaviour = behaviour;
+        _diableActor = diableActor;
     }
 
-    public void React(PlayerBehaviour player)
+    public void Enter()
     {
         Debug.Log("ОН ИДЕТ! СЛИШКОМ СТРАШНО! БАБАХ");
-        _behaviour.Die();
+        _diableActor.Die();
+    }
+
+    public void Exit()
+    {
+        Debug.Log("Хвааатит... он уже и так мёртв... ПЛАК");
+    }
+
+    public void Update()
+    {
+        Debug.Log("Если вдруг захочу умереть не моментально");
     }
 }
