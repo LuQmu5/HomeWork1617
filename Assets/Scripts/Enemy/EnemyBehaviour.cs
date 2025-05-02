@@ -20,7 +20,12 @@ public class EnemyBehaviour : MonoBehaviour, IDiableActor
     private void Start()
     {
         _currentBehaviour = _idleBehaviour;
-        _currentBehaviour.Enter();
+        _currentBehaviour?.Enter();
+    }
+
+    private void Update()
+    {
+        _currentBehaviour?.Update();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,6 +53,6 @@ public class EnemyBehaviour : MonoBehaviour, IDiableActor
     {
         _currentBehaviour?.Exit();
         _currentBehaviour = newBehaviour;
-        _currentBehaviour.Enter();
+        _currentBehaviour?.Enter();
     }
 }
